@@ -1,7 +1,7 @@
 # multi-cluster-demo
 
 ```yaml
-|
+.
 ├── README.md
 ├── Taskfile.yaml
 ├── app
@@ -10,16 +10,17 @@
 │   ├── namespace.yaml
 │   ├── sleep.yaml
 │   └── tls-secret.yaml
-├── infra
-│   ├── east-west.yaml
+├── east-west
 │   ├── install-ew-gw.yaml
-│   ├── install-gw.yaml
-│   ├── ws-config.yaml
 │   └── ws-ew-config.yaml
+├── infra
+│   ├── install-gw.yaml
+│   └── ws-config.yaml
 ├── scripts
 │   ├── deploy-app.sh
 │   ├── deploy-t1.sh
 │   ├── east-west.sh
+│   ├── ew-failover.sh
 │   ├── t2-failover.sh
 │   └── ws-config.sh
 └── t1
