@@ -10,23 +10,24 @@
 │   ├── sleep.yaml
 │   └── tls-secret.yaml
 ├── app-gateway
-│   ├── gw-config.yaml
-│   ├── install-gw.yaml
+│   ├── app-gw-config.yaml
+│   ├── install-app-gw.yaml
 │   └── ws-config.yaml
 ├── canary
 ├── east-west
 │   ├── install-ew-gw.yaml
 │   └── ws-ew-config.yaml
 ├── edge-gateway
-│   ├── install-gw-t1.yaml
+│   ├── edge-gw-config.yaml
+│   ├── install-edge-gw.yaml
 │   ├── namespace.yaml
-│   ├── t1-gw-config.yaml
-│   └── t1-ws-config.yaml
+│   └── ws-config.yaml
 └── scripts
+    ├── app-gw-failover.sh
     ├── deploy-app.sh
-    ├── deploy-t1.sh
+    ├── deploy-edge.sh
     ├── east-west.sh
     ├── ew-failover.sh
     ├── ext-client.sh
-    └── t2-failover.sh
+    └── int-client.sh
 ```

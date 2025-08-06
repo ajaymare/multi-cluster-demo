@@ -1,0 +1,66 @@
+---
+apiVersion: v1
+kind: List
+items:
+  - apiVersion: gateway.tsb.tetrate.io/v2
+    kind: Gateway
+    metadata:
+      name: bookinfo-centralus-gw
+      annotations:
+        tsb.tetrate.io/organization: tetrate
+        tsb.tetrate.io/tenant: bookinfo
+        tsb.tetrate.io/workspace: bookinfo-ws
+        tsb.tetrate.io/gatewayGroup: bookinfo-gg-centralus
+    spec:
+      workloadSelector:
+        namespace: bookinfo
+        labels:
+          app: bookinfo-gw
+      http:
+        - name: bookinfo-ssl
+          port: 443
+          hostname: "bookinfo.tetrate.io"
+          tls:
+            mode: SIMPLE
+            secretName: bookinfo-cert
+          routing:
+            rules:
+              - modify:
+                  headers:
+                    response:
+                      add:
+                        location: "centralus"
+                route:
+                  serviceDestination:
+                    host: "bookinfo/productpage.bookinfo.svc.cluster.local"
+  - apiVersion: gateway.tsb.tetrate.io/v2
+    kind: Gateway
+    metadata:
+      name: bookinfo-eastus-gw
+      annotations:
+        tsb.tetrate.io/organization: tetrate
+        tsb.tetrate.io/tenant: bookinfo
+        tsb.tetrate.io/workspace: bookinfo-ws
+        tsb.tetrate.io/gatewayGroup: bookinfo-gg-eastus
+    spec:
+      workloadSelector:
+        namespace: bookinfo
+        labels:
+          app: bookinfo-gw
+      http:
+        - name: bookinfo-ssl
+          port: 443
+          hostname: "bookinfo.tetrate.io"
+          tls:
+            mode: SIMPLE
+            secretName: bookinfo-cert
+          routing:
+            rules:
+              - modify:
+                  headers:
+                    response:
+                      add:
+                        location: "eastus"
+                route:
+                  serviceDestination:
+                    host: "bookinfo/productpage.bookinfo.svc.cluster.local"

@@ -19,7 +19,7 @@ for CONTEXT in "${CONTEXTS[@]}"; do
   }
   echo "Deploying application to cluster: $CONTEXT"
   kubectl --context="$CONTEXT" apply -f app/bookinfo-service.yaml -n bookinfo
-  kubectl --context="$CONTEXT" apply -f app-gateway/install-gw.yaml -n bookinfo
+  kubectl --context="$CONTEXT" apply -f app-gateway/install-app-gw.yaml -n bookinfo
   # Check deployment status
   sleep 5  # Wait for deployment to start
   echo "Checking status of Bookinfo deployments in $CONTEXT..."
@@ -52,7 +52,7 @@ kubectl --context="$CONTEXT" get secret bookinfo-cert -n bookinfo || {
   echo "✅ TLS secret 'bookinfo-cert' created successfully."
 }
 echo "Configuring Gateway for bookinfo in context: $CONTEXT"
-kubectl --context="$CONTEXT" apply -f "app-gateway/gw-config.yaml"
+kubectl --context="$CONTEXT" apply -f "app-gateway/app-gw-config.yaml"
 
 # Define your kubeconfig contexts
 #CONTEXT="azure-centralus"

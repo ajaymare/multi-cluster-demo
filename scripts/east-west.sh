@@ -3,9 +3,6 @@
 # Define your kubeconfig contexts
 CONTEXTS=("azure-centralus" "azure-eastus")
 
-# Path to the manifest
-MANIFEST="infra/install-gw.yaml"
-
 # Deploy Gateway to each cluster
 for CONTEXT in "${CONTEXTS[@]}"; do
   echo "Checking bookinfo namespace in context: $CONTEXT"
@@ -29,6 +26,11 @@ for CONTEXT in "${CONTEXTS[@]}"; do
   echo "--------------------------------------------------------"
 done
 echo "East West Gateway deployment completed across all contexts."
+
+# Define your kubeconfig contexts
+CONTEXT="azure-centralus"
+
+# Deploy East West Gateway configuration
 echo "Configuring East West Gateway for bookinfo in context: $CONTEXT"
 kubectl --context="$CONTEXT" apply -f "east-west/ws-ew-config.yaml"
 echo "East West Gateway configuration applied successfully in context: $CONTEXT"

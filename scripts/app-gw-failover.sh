@@ -7,7 +7,7 @@ CONTEXT="azure-centralus"
 echo "Checking status of Gateway deployments in $CONTEXT..."
 kubectl --context="$CONTEXT" get deployment/bookinfo-gw -n bookinfo || {
   echo "Gateway deployment not found in context $CONTEXT. Deploying Gateway..."
-  kubectl --context="$CONTEXT" apply -f infra/install-gw.yaml -n bookinfo
+  kubectl --context="$CONTEXT" apply -f app-gateway/install-app-gw.yaml -n bookinfo
   sleep 5  # Wait for deployment to start
   echo "Gateway deployment initiated in context $CONTEXT."
 } || {
@@ -15,7 +15,7 @@ kubectl --context="$CONTEXT" get deployment/bookinfo-gw -n bookinfo || {
   exit 1
 }
 echo "✅ Gateway deployment found in context $CONTEXT."
-echo "Performing T2 Failover in context: $CONTEXT"
+echo "Performing App Failover in context: $CONTEXT"
 kubectl --context="$CONTEXT" scale deploy bookinfo-gw -n bookinfo --replicas=0 || {
   echo "❌ Failed to scale down Gateway deployment in context $CONTEXT."
   exit 1
@@ -36,7 +36,7 @@ kubectl --context="$CONTEXT" get deployment/bookinfo-gw -n bookinfo || {
   exit 1
 }
 echo "✅ Gateway deployment found in context $CONTEXT after failover."
-echo "T2 Failover test completed successfully in context: $CONTEXT"
+echo "App Failover test completed successfully in context: $CONTEXT"
 echo "--------------------------------------------------------------------"
-echo "T2 Failover script executed successfully in context: $CONTEXT"
+echo "App Failover script executed successfully in context: $CONTEXT"
 echo "--------------------------------------------------------------------"

@@ -5,7 +5,7 @@ metadata:
   namespace: bookinfo
   annotations:
     tsb.tetrate.io/organization: tetrate
-    tsb.tetrate.io/tenant: bookinfo-sidecar
+    tsb.tetrate.io/tenant: bookinfo
     tsb.tetrate.io/workspace: bookinfo-ws
 spec:
   failoverSettings:

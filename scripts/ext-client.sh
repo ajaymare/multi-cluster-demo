@@ -8,17 +8,20 @@ NC='\033[0m' # No Color
 
 URL="https://bookinfo.tetrate.io"
 
+# Define your kubeconfig contexts
+CONTEXT="azure-centralus"
+
 while true; do
     timestamp=$(date +"%Y-%m-%d %H:%M:%S")
     #dns_lookup=$(dig +short $URL)
-    response=$(curl $URL/productpage -sS -I -k --resolve "bookinfo.tetrate.io:443:128.203.211.38")
+    svcip=$(kubectl --context="$CONTEXT" get svc tier1-gw -n tier1 -o jsonpath='{.status.loadBalancer.ingress[0].ip}')
+    response=$(curl $URL/productpage -sS -I -k --resolve "bookinfo.tetrate.io:443:$svcip")
     response_code=$(echo "$response" | awk 'NR==1 {print $2}')
-    location_header=$(echo "$response" | awk '/^location:/ {match($0, /location:\s*(eastus|centralus)/); if(RSTART != 0) {print substr($0, RSTART+length("location:"), RLENGTH)}}')
+    location_header=$(echo "$response" | grep -i ^location: | awk '{print $2}' | tr -d '\r')
 
     echo $location_header
     # Print timestamp, DNS lookup result, response code, and location header with color
     echo "Timestamp: ${YELLOW}$timestamp"${NC}
-    #echo "DNS Lookup\n ${RED}$dns_lookup"${NC}
     echo "Response Code: ${RED}$response_code${NC}"
     
     if echo "$location_header" | grep -q "eastus"; then

@@ -5,27 +5,22 @@ tasks:
     desc: Deploy Bookinfo app and Gateway to all clusters
     cmds:
       - ./scripts/deploy-app.sh
+  
+  deploy:edge:
+    desc: Deploy Edge configuration
+    cmds:
+      - ./scripts/deploy-edge.sh
+  
+  deploy:app-gw-failover:
+    desc: Perform App GW failover 
+    cmds:
+      - ./scripts/app-gw-failover.sh
 
-  deploy:tsb-config:
-    desc: Configure TSB Infra
-    cmds:
-      - ./scripts/ws-config.sh
-  
-  deploy:t1:
-    desc: Deploy T1 configuration
-    cmds:
-      - ./scripts/deploy-t1.sh
-  
-  deploy:t2-failover:
-    desc: Perform T2 GW failover 
-    cmds:
-      - ./scripts/t2-failover.sh
-  
   deploy:east-west:
     desc: Deploy East West Gateway and configure it
     cmds:
       - ./scripts/east-west.sh
-      
+
   deploy:ew-failover:
     desc: Perform East West Gateway failover
     cmds:

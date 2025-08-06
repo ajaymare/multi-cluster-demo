@@ -5,19 +5,19 @@ items:
   - apiVersion: tsb.tetrate.io/v2
     kind: Tenant
     metadata:
-      name: bookinfo-sidecar
+      name: bookinfo
       annotations:
         tsb.tetrate.io/organization: tetrate
     spec:
-      description: bookinfo sidecar Mode
-      displayName: bookinfo-sidecar
+      description: bookinfo Application Tenant
+      displayName: bookinfo 
   - apiVersion: tsb.tetrate.io/v2
     kind: Workspace
     metadata:
       name: bookinfo-ws
       annotations:
         tsb.tetrate.io/organization: tetrate
-        tsb.tetrate.io/tenant: bookinfo-sidecar
+        tsb.tetrate.io/tenant: bookinfo
       labels:
         app: bookinfo
     spec:
@@ -27,15 +27,28 @@ items:
   - apiVersion: gateway.tsb.tetrate.io/v2
     kind: Group
     metadata:
-      name: bookinfo-gg
+      name: bookinfo-gg-centralus
       annotations:
         tsb.tetrate.io/organization: tetrate
-        tsb.tetrate.io/tenant: bookinfo-sidecar
+        tsb.tetrate.io/tenant: bookinfo
         tsb.tetrate.io/workspace: bookinfo-ws
     spec:
       namespaceSelector:
         names:
-          - "*/bookinfo"
+          - "azure-centralus/bookinfo"
+      configMode: BRIDGED
+  - apiVersion: gateway.tsb.tetrate.io/v2
+    kind: Group
+    metadata:
+      name: bookinfo-gg-eastus
+      annotations:
+        tsb.tetrate.io/organization: tetrate
+        tsb.tetrate.io/tenant: bookinfo
+        tsb.tetrate.io/workspace: bookinfo-ws
+    spec:
+      namespaceSelector:
+        names:
+          - "azure-eastus/bookinfo"
       configMode: BRIDGED
   - apiVersion: traffic.tsb.tetrate.io/v2
     kind: Group
@@ -43,7 +56,7 @@ items:
       name: bookinfo-tg
       annotations:
         tsb.tetrate.io/organization: tetrate
-        tsb.tetrate.io/tenant: bookinfo-sidecar
+        tsb.tetrate.io/tenant: bookinfo
         tsb.tetrate.io/workspace: bookinfo-ws
     spec:
       namespaceSelector:
@@ -56,7 +69,7 @@ items:
       name: bookinfo-sg
       annotations:
         tsb.tetrate.io/organization: tetrate
-        tsb.tetrate.io/tenant: bookinfo-sidecar
+        tsb.tetrate.io/tenant: bookinfo
         tsb.tetrate.io/workspace: bookinfo-ws
     spec:
       namespaceSelector:
