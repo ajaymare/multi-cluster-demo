@@ -21,7 +21,7 @@ for CONTEXT in "${CONTEXTS[@]}"; do
     echo "Namespace 'bookinfo' created."
   }
   echo "Deploying East West Gateway to cluster: $CONTEXT"
-  kubectl --context="$CONTEXT" apply -f infra/install-ew-gw.yaml -n bookinfo
+  kubectl --context="$CONTEXT" apply -f east-west/install-ew-gw.yaml -n bookinfo
   # Check deployment status
   sleep 5  # Wait for deployment to start
   echo "Checking status of East West Gateway deployments in $CONTEXT..."
@@ -30,5 +30,5 @@ for CONTEXT in "${CONTEXTS[@]}"; do
 done
 echo "East West Gateway deployment completed across all contexts."
 echo "Configuring East West Gateway for bookinfo in context: $CONTEXT"
-kubectl --context="$CONTEXT" apply -f "infra/ws-ew-config.yaml"
+kubectl --context="$CONTEXT" apply -f "east-west/ws-ew-config.yaml"
 echo "East West Gateway configuration applied successfully in context: $CONTEXT"
