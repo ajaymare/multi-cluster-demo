@@ -29,6 +29,12 @@ echo "❌ Failed to create TLS secret 'bookinfo-cert' in context $CONTEXT."
 exit 1
   }
 echo "✅ TLS secret 'bookinfo-cert' created successfully."
-}   
-echo "Deploying T1 Configuration: $CONTEXT"
-kubectl --context="$CONTEXT" apply -f "t1/t1-config.yaml"
+} 
+echo "Deploying T1 Gatway on Cluster: $CONTEXT"
+kubectl --context="$CONTEXT" apply -f t1/install-gw-t1.yaml -n tier1
+sleep 5  # Wait for deployment to start
+echo "Configuring Tier1 Gateway workspace in Cluster: $CONTEXT"
+kubectl --context="$CONTEXT" apply -f "t1/t1-ws-config.yaml" 
+sleep 10  # Wait for workspace configuration to apply
+echo "Configuring Tier1 Gatewaty in Cluster: $CONTEXT"
+kubectl --context="$CONTEXT" apply -f "t1/t1-gw-config.yaml"

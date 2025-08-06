@@ -72,8 +72,8 @@ spec:
         args:
           - /bin/sh
           - -c
-          - 'while true; do curl -I -k https://bookinfo.tetrate.io/productpage; sleep 1;done'
-          - 'while true; do curl -I -k bookinfo/productpage.bookinfo.svc.cluster.local; sleep 1;done'
+          - 'while true; do curl -s -I -k https://bookinfo.tetrate.io/productpage; sleep 1;done'
+          - 'while true; do curl -s -I http://productpage.bookinfo.svc.cluster.local:9080; sleep 1;done'
       volumes:
       - name: secret-volume
         secret:

@@ -1,0 +1,9 @@
+apiVersion: install.tetrate.io/v1alpha1
+kind: Gateway
+metadata:
+  name: tier1-gw
+  namespace: tier1
+spec:
+  kubeSpec:
+    service:
+      type: LoadBalancer

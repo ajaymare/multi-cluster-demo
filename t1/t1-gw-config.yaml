@@ -1,0 +1,44 @@
+apiVersion: gateway.tsb.tetrate.io/v2
+kind: Gateway
+metadata:
+  name: tier1-gateway
+  namespace: tier1
+  annotations:
+    tsb.tetrate.io/organization: tetrate
+    tsb.tetrate.io/tenant: tier1
+    tsb.tetrate.io/workspace: tier1-ws
+    tsb.tetrate.io/gatewayGroup: tier1-gg
+spec:
+  workloadSelector:
+    namespace: tier1
+    labels:
+      app: tier1-gw
+  http:
+  - name: bookinfo-http
+    port: 80
+    hostname: bookinfo.tetrate.io
+    routing:
+      rules:
+        - redirect:
+            authority: bookinfo.tetrate.io
+            port: 443
+            redirectCode: 301
+            scheme: https
+  - name: bookinfo-https
+    hostname: bookinfo.tetrate.io
+    port: 443
+    tls:
+      mode: SIMPLE
+      secretName: bookinfo-cert
+    routing:
+      rules:
+        - match:
+            - uri:
+                prefix: "/productpage"
+          route:
+            clusterDestination:
+              clusters:
+                - name: azure-centralus
+                  weight: 50
+                - name: azure-eastus
+                  weight: 50
