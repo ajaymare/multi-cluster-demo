@@ -3,9 +3,6 @@
 # Define your kubeconfig contexts
 CONTEXTS=("azure-centralus" "azure-eastus")
 
-# Path to the manifest
-MANIFEST="app/bookinfo-service.yaml"
-
 # Deploy bookinfo App to each cluster
 for CONTEXT in "${CONTEXTS[@]}"; do
   echo "Checking bookinfo namespace in context: $CONTEXT"
@@ -22,7 +19,7 @@ for CONTEXT in "${CONTEXTS[@]}"; do
   }
   echo "Deploying application to cluster: $CONTEXT"
   kubectl --context="$CONTEXT" apply -f app/bookinfo-service.yaml -n bookinfo
-  kubectl --context="$CONTEXT" apply -f infra/install-gw.yaml -n bookinfo
+  kubectl --context="$CONTEXT" apply -f app-gateway/install-gw.yaml -n bookinfo
   # Check deployment status
   sleep 5  # Wait for deployment to start
   echo "Checking status of Bookinfo deployments in $CONTEXT..."
@@ -39,7 +36,28 @@ done
 # Define your kubeconfig contexts
 CONTEXT="azure-centralus"
 
-# Deploy Sleep configuration to cluster
+# Deploy bookinfo App to each cluster
+echo "Configuring TSB Workspace and Groups: $CONTEXT"
+kubectl --context="$CONTEXT" apply -f "app-gateway/ws-config.yaml"
+sleep 5  # Wait for deployment to start
+echo "Checking TLS secret in context: $CONTEXT"
+kubectl --context="$CONTEXT" get secret bookinfo-cert -n bookinfo || {
+  echo "❌ TLS secret 'bookinfo-cert' does not exist in context $CONTEXT. Creating it..."
+  kubectl --context="$CONTEXT" apply -f app/tls-secret.yaml -n bookinfo
+  sleep 5  # Wait for secret creation
+  kubectl --context="$CONTEXT" get secret bookinfo-cert -n bookinfo || {
+    echo "❌ Failed to create TLS secret 'bookinfo-cert' in context $CONTEXT."
+    exit 1
+   }
+  echo "✅ TLS secret 'bookinfo-cert' created successfully."
+}
+echo "Configuring Gateway for bookinfo in context: $CONTEXT"
+kubectl --context="$CONTEXT" apply -f "app-gateway/gw-config.yaml"
+
+# Define your kubeconfig contexts
+#CONTEXT="azure-centralus"
+
+# Deploy Sleep service to verify traffic to service
 echo "Checking sleep namespace in context: $CONTEXT"
 kubectl --context="$CONTEXT" get namespace sleep || {
 echo "Namespace 'sleep' does not exist in context $CONTEXT. Creating it..."
