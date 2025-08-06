@@ -25,3 +25,8 @@ tasks:
     desc: Deploy East West Gateway and configure it
     cmds:
       - ./scripts/east-west.sh
+      
+  deploy:ew-failover:
+    desc: Perform East West Gateway failover
+    cmds:
+      - ./scripts/ew-failover.sh
