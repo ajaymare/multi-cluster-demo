@@ -1,0 +1,17 @@
+apiVersion: tsb.tetrate.io/v2
+kind: WorkspaceSetting
+metadata:
+  name: bookinfo-wss
+  namespace: bookinfo
+  annotations:
+    tsb.tetrate.io/organization: tetrate
+    tsb.tetrate.io/tenant: bookinfo-sidecar
+    tsb.tetrate.io/workspace: bookinfo-ws
+spec:
+  failoverSettings:
+    topologyChoice: CLUSTER
+  defaultEastWestGatewaySettings:
+    - workloadSelector:
+        namespace: bookinfo
+        labels:
+          app: eastwest-gateway

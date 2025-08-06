@@ -1,0 +1,13 @@
+---
+apiVersion: install.tetrate.io/v1alpha1
+kind: Gateway
+metadata:
+  name: bookinfo-gw
+  namespace: bookinfo
+spec:
+  type: UNIFIED
+  #eastWestOnly: true
+  kubeSpec:
+    service:
+      type: LoadBalancer
+          
