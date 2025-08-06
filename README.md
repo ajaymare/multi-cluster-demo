@@ -1,4 +1,5 @@
 # multi-cluster-demo
+```yaml
 ├── README.md
 ├── Taskfile.yaml
 ├── app
@@ -24,3 +25,4 @@
     ├── namespace.yaml
     ├── t1-gw-config.yaml
     └── t1-ws-config.yaml
+```
