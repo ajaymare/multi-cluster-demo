@@ -25,3 +25,8 @@ tasks:
     desc: Perform East West Gateway failover test and restore
     cmds:
       - ./scripts/ew-failover.sh
+  
+  delete:edge:
+    desc: Delete Edge Gateway and configuration
+    cmds:
+      - ./scripts/delete-edge.sh

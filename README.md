@@ -35,6 +35,7 @@
 ## env file with cluster context
 ```sh
 #!/bin/bash
+# Cluster Context for AKS Clusters used in the multi-cluster demo
 CENTRALUS="azure-centralus"
 EASTUS="azure-eastus"
 ```
