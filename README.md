@@ -31,6 +31,14 @@
     ├── ext-client.sh
     └── int-client.sh
 ```
+
+## env file with cluster context
+```sh
+#!/bin/bash
+CENTRALUS="azure-centralus"
+EASTUS="azure-eastus"
+```
+
 ## Usage:
 ```yaml
 task: Available tasks for this project:
