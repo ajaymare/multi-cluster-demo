@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Define your kubeconfig contexts
-CONTEXTS=("azure-centralus" "azure-eastus")
+CONTEXTS=($(kubectl config get-contexts -o name))
 
 # Deploy Gateway to each cluster
 for CONTEXT in "${CONTEXTS[@]}"; do
@@ -27,8 +27,15 @@ for CONTEXT in "${CONTEXTS[@]}"; do
 done
 echo "East West Gateway deployment completed across all contexts."
 
+# Load variables from .env
+if [ -f .env ]; then
+  export $(grep -v '^#' .env | xargs)
+else
+  echo ".env file not found!"
+  exit 1
+fi
 # Define your kubeconfig contexts
-CONTEXT="azure-centralus"
+CONTEXT=$CENTRALUS
 
 # Deploy East West Gateway configuration
 echo "Configuring East West Gateway for bookinfo in context: $CONTEXT"

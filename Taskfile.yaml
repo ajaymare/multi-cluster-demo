@@ -2,26 +2,26 @@ version: '3'
 
 tasks:
   deploy:app:
-    desc: Deploy Bookinfo app and Gateway to all clusters
+    desc: Deploy Bookinfo app and Gateway to all available clusters
     cmds:
       - ./scripts/deploy-app.sh
   
   deploy:edge:
-    desc: Deploy Edge configuration
+    desc: Deploy Edge Gateway and configuration
     cmds:
       - ./scripts/deploy-edge.sh
   
   deploy:app-gw-failover:
-    desc: Perform App GW failover 
+    desc: Perform App GW failover and restore
     cmds:
       - ./scripts/app-gw-failover.sh
 
   deploy:east-west:
-    desc: Deploy East West Gateway and configure it
+    desc: Deploy East West Gateway and respective configuration across clusters
     cmds:
       - ./scripts/east-west.sh
 
   deploy:ew-failover:
-    desc: Perform East West Gateway failover
+    desc: Perform East West Gateway failover test and restore
     cmds:
       - ./scripts/ew-failover.sh

@@ -1,7 +1,14 @@
 #!/bin/bash
+# Load variables from .env
+if [ -f .env ]; then
+  export $(grep -v '^#' .env | xargs)
+else
+  echo ".env file not found!"
+  exit 1
+fi
 
 # Define your kubeconfig contexts
-CONTEXT="azure-centralus"
+CONTEXT=$CENTRALUS
 
 # Deploy bookinfo App to each cluster
 echo "Checking status of Gateway deployments in $CONTEXT..."

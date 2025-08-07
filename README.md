@@ -31,3 +31,12 @@
     ├── ext-client.sh
     └── int-client.sh
 ```
+## Usage:
+```yaml
+task: Available tasks for this project:
+* deploy:app:                   Deploy Bookinfo app and Gateway to all available clusters
+* deploy:app-gw-failover:       Perform App GW failover and restore
+* deploy:east-west:             Deploy East West Gateway and respective configuration across clusters
+* deploy:edge:                  Deploy Edge Gateway and configuration
+* deploy:ew-failover:           Perform East West Gateway failover test and restore
+```

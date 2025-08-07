@@ -8,8 +8,16 @@ NC='\033[0m' # No Color
 
 URL="https://bookinfo.tetrate.io"
 
+# Load variables from .env
+if [ -f .env ]; then
+  export $(grep -v '^#' .env | xargs)
+else
+  echo ".env file not found!"
+  exit 1
+fi
 # Define your kubeconfig contexts
-CONTEXT="azure-centralus"
+
+CONTEXT=$CENTRALUS
 
 while true; do
     timestamp=$(date +"%Y-%m-%d %H:%M:%S")

@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Define your kubeconfig contexts
-CONTEXTS=("azure-centralus" "azure-eastus")
+CONTEXTS=($(kubectl config get-contexts -o name))
 
 # Deploy bookinfo App to each cluster
 for CONTEXT in "${CONTEXTS[@]}"; do
@@ -33,8 +33,6 @@ for CONTEXT in "${CONTEXTS[@]}"; do
   echo "--------------------------------------------------------"
 done
 
-# Define your kubeconfig contexts
-CONTEXT="azure-centralus"
 
 # Deploy bookinfo App to each cluster
 echo "Configuring TSB Workspace and Groups: $CONTEXT"
@@ -54,8 +52,16 @@ kubectl --context="$CONTEXT" get secret bookinfo-cert -n bookinfo || {
 echo "Configuring Gateway for bookinfo in context: $CONTEXT"
 kubectl --context="$CONTEXT" apply -f "app-gateway/app-gw-config.yaml"
 
+
+# Load variables from .env
+if [ -f .env ]; then
+  export $(grep -v '^#' .env | xargs)
+else
+  echo ".env file not found!"
+  exit 1
+fi
 # Define your kubeconfig contexts
-#CONTEXT="azure-centralus"
+CONTEXT=$CENTRALUS
 
 # Deploy Sleep service to verify traffic to service
 echo "Checking sleep namespace in context: $CONTEXT"

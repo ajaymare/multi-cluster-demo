@@ -1,12 +1,16 @@
 #!/bin/bash
 
+# Load variables from .env
+if [ -f .env ]; then
+  export $(grep -v '^#' .env | xargs)
+else
+  echo ".env file not found!"
+  exit 1
+fi
 # Define your kubeconfig contexts
-CONTEXT="azure-centralus"
+CONTEXT=$CENTRALUS
 
-# Path to the manifest
-MANIFEST="t1/t1-config.yaml"
-
-# Deploy T1 configuration to cluster
+# Deploy Edge Gateway to cluster
 echo "Checking tier1 namespace in context: $CONTEXT"
 kubectl --context="$CONTEXT" get namespace tier1 || {
 echo "Namespace 'tier1' does not exist in context $CONTEXT. Creating it..."
